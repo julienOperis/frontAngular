@@ -1,0 +1,6 @@
+@if (showAlert$ | async; as showAlert ) {
+<app-alert [message]="showAlert.message" [type]="showAlert.type"></app-alert>
+} @if (globalService.getLoginStatus()) {
+<app-header></app-header>
+}
+<router-outlet></router-outlet>

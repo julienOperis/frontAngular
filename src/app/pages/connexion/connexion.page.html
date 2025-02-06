@@ -1,0 +1,39 @@
+<div class="connexion-container">
+  <form
+    class="login-form"
+    [formGroup]="loginForm"
+    (submit)="onBouttonConnexion()"
+  >
+  
+  @if (showMsgInvalidFrom) {
+    <p class="msg-error">
+      Formulaire invalide
+    </p>
+    }
+    <!-- @let emailInvalide = loginForm.controls['email'].errors?.['emailInvalide']; -->
+    @let emailInvalide = loginForm.controls['email'].errors?.['emailInvalide'];
+    @if(emailInvalide){ 
+      <p>{{emailInvalide.message}}</p>
+    }
+    <input
+      [ngClass]="{
+        error: formIsInvalidTouchedHtml('email')
+      }"
+      formControlName="email"
+      placeholder="Email"
+      type="email"
+    />
+
+    <input
+      [ngClass]="{
+        error: formIsInvalidTouchedHtml('password')
+      }"
+      formControlName="password"
+      type="password"
+      placeholder="Mot de passe"
+    />
+  
+    <button type="submit">se connecter</button>
+  </form>
+  <button routerLink="/inscription" >Inscription</button>
+</div>

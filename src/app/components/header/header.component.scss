@@ -1,0 +1,48 @@
+
+.navbar {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+    ul {
+
+      align-items: center;
+      gap: 1rem;
+      font-size: 17px;
+      display: flex;
+      justify-content: center;
+
+    }
+    
+    li {
+ 
+      display: flex;
+      justify-content: center;      
+      gap: 1rem;
+    
+
+      a {
+        text-decoration: none;
+        color: darkslategray;        
+      }
+
+      p {
+        
+        width: 100%;
+        border: none;
+        height: 2.5rem;
+        background-color: rgb(225, 225, 225);
+        border-radius: 8px;
+        padding-top: 8px;
+        
+        text-align: center;
+      }
+      button {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+  }
+  

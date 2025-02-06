@@ -1,0 +1,43 @@
+<div class="inscription-container">
+    <form 
+    class="inscription-form" 
+    [formGroup]="inscriptionForm"
+    (submit)="inscription()" >
+        <h1>Formulaire d'inscription</h1>
+        <!-- <app-dialoggeneric></app-dialoggeneric> -->
+        <input
+        [ngClass]="{
+            error: formIsInvalidTouchedHtml('firstName')
+          }"
+        formControlName="firstName"
+        placeholder="Firstame"
+        type="firstName"
+        />
+        <input
+        [ngClass]="{
+            error: formIsInvalidTouchedHtml('lastName')
+          }"
+        formControlName="lastName"
+        placeholder="Lastname"
+        type="lastName"
+        />
+        <input
+        [ngClass]="{
+          error: formIsInvalidTouchedHtml('email')
+        }"
+        formControlName="email"
+        placeholder="Email"
+        type="email"
+        />
+        <input
+        [ngClass]="{
+          error: formIsInvalidTouchedHtml('password')
+        }"
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        />
+        <button type="submit">Register</button>
+        <button routerLink="/connexion" >Connexion</button>
+    </form>
+</div>
