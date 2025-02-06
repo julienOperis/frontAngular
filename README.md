@@ -26,6 +26,12 @@ Avec Angular CLI, créez un projet de base :
 ```bash
 ng new nom-du-projet
 ```
+
+## Extension VS code 
+ * Angular Snippets (Version 18)
+ * Angular Language Service
+ * Git Lens
+
 ## Explorer la Structure d’un Projet Angular
 
 Lorsqu'on crée un projet Angular avec Angular CLI, une structure de dossier est automatiquement générée. Voici les dossiers principaux et leurs rôles :
