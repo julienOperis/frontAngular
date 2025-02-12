@@ -28,9 +28,31 @@ ng new nom-du-projet
 ```
 
 ## Extension VS code 
+ * Angular 17 Snippets 
  * Angular Snippets (Version 18)
  * Angular Language Service
  * Git Lens
+ * Prettier - Code formatter
+
+ ***Extension js***
+
+```json
+ {
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": [
+    "angular.ng-template",
+    "mikael.angular-beastcode",
+    "johnpapa.angular2",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode"
+  ]
+}
+```
+
+### Mettre ne place les extionsions recommandés
+    les extionsions sont dans le dossier ***.vscode***    
+    * [extensions.json](https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions)
+
 
 ## Explorer la Structure d’un Projet Angular
 
