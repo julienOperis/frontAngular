@@ -81,6 +81,46 @@ Pour créer un composant avec Angular CLI :
 ng generate component nom-du-composant
 ```
 
+
+
+## Resoudre le probl?mes d'import 
+
+
+```bash
+
+
+```bash
+X [ERROR] TS-992012: Component imports must be standalone components, directives, pipes, or must be NgModules. [plugin angular-compiler]
+
+    src/app/pages/profil/profil.component.ts:10:12:
+      10 ?   imports: [FormGroup],
+         ?             ~~~~~~~~~
+```
+  
+Recherche dans le composant par exemple ***FormGroup*** les @ngModule car les modules nécessaires ne sont pas standelone.
+
+
+```TS
+ /*
+ * @ngModule ReactiveFormsModule
+ * @ngModule FormsModule
+ * */
+
+//Dans le composant qui utilise FormGroup
+
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-profil',
+  standalone: true,
+  imports: [ReactiveFormsModule,FormsModule],
+  templateUrl: './profil.component.html',
+  styleUrl: './profil.component.scss',
+})
+```
+
+
+
 ## Utiliser l'Opérateur de Décomposition (`...`) en TypeScript
 
 L'opérateur de décomposition (`...`) en TypeScript permet de **fusionner des objets** ou de **copier leurs propriétés** dans un nouvel objet. Cette syntaxe est simple et efficace pour concaténer des objets ou créer des copies avec des modifications spécifiques.
