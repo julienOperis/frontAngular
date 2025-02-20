@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
 import { Login } from '../models/user.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Profile } from '../models/profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +33,14 @@ export class AuthService {
     return this.httpClient.post<Login>("http://localhost:3000/auth/login",login)
   }
 
-  public profile$():Observable<string>{
+  public profile$():Observable<Profile>{
     console.log('get profile Login');    
     const headers = new HttpHeaders({
       'Authorization': ['Authorization', this.getToken() ?? '' ],
       'Custom-Header': 'value'
     });
 
-    return this.httpClient.get<string>("http://localhost:3000/users/profile",{headers})
+    return this.httpClient.get<Profile>("http://localhost:3000/users/profile",{headers})
   }
 
 

@@ -39,10 +39,6 @@ export class ProfilComponent {
 
   ngOnInit(): void {
     this.profil();
-    // this.profilForm.get('firstName')?.setValue("TEST");
-    // this.profilForm.get('lastName')?.setValue("TEST");
-    // this.profilForm.get('email')?.setValue("test@test.fr");
-    // this.profilForm.get('password')?.setValue("Operis");
   }
 
   public profil(): void {
@@ -50,7 +46,14 @@ export class ProfilComponent {
       .profile$()
       .pipe(
         take(1),
-        tap((reponse) => console.log(reponse)),
+        tap((reponse) => {
+          console.log(reponse);
+          console.log(reponse.firstName);
+    this.profilForm.get('firstName')?.setValue(reponse.firstName);
+    this.profilForm.get('lastName')?.setValue(reponse.lastName);
+    this.profilForm.get('email')?.setValue(reponse.email);
+
+        }),
 
         finalize(() => {})
       )

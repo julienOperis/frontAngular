@@ -1,5 +1,5 @@
 
-export interface Avis {
+export interface Review {
         user: string;
         date: Date;
         com: string;

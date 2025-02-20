@@ -1,4 +1,4 @@
-import { Avis } from "./avis.interface";
+import { Review } from "./review.interface";
 import { User } from "./user.interface";
 
 export interface Restaurant {
@@ -6,6 +6,6 @@ export interface Restaurant {
     id: number;
     name: string;
     adresse: string;
-    avis: Avis[];
+    avis: Review[];
     users: User[];
 }
