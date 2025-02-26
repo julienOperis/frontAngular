@@ -79,7 +79,7 @@ export class InscriptionComponent {
           return EMPTY; //Couper le flux,
         }),
         tap((reponse) => {
-          this.alertService.setAlert('Inscription valid� ',AlertComponent.SUCCESS);
+          this.alertService.setAlert('Inscription validé ',AlertComponent.SUCCESS);
           this.serviceSuccess.setDataSuccess(reponse);
           this.router.navigate(['/connexion',{login:this.inscriptionForm.get('email')?.value}])
         })

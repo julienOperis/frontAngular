@@ -99,9 +99,9 @@ private route=inject(ActivatedRoute)
           console.error(error.status);
           
           if(error.status == 401)
-            this.alertService.setAlert('Incorrect email or password',AlertComponent.ERROR);
+            this.alertService.setAlert('Incorrect email or password',AlertComponent.ERROR,true);
           else
-            this.alertService.setAlert('An error has occurred :'+error.error.message,AlertComponent.ERROR);
+            this.alertService.setAlert('An error has occurred :'+error.error.message,AlertComponent.ERROR,true);
           
           return EMPTY; //Couper le flux,
         }),
