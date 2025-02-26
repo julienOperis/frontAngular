@@ -1,7 +1,6 @@
 import { Restaurant } from "./restaurant.interface";
 
 export interface Profile {
-    id: number;
     firstName: string;
     lastName: string;
     email: string;

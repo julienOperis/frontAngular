@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
 import { Login } from '../models/user.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Profile } from '../models/profile.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class AuthService {
     return this.httpClient.post<Login>("http://localhost:3000/auth/login",login)
   }
 
-  public profile$():Observable<Profile>{
+  public getProfile$():Observable<Profile>{
     console.log('get profile Login');    
     const headers = new HttpHeaders({
       'Authorization': ['Authorization', this.getToken() ?? '' ],
@@ -45,6 +46,28 @@ export class AuthService {
 
 
   
+  public setProfile$(profilMaj:Profile):Observable<Profile>{
+    console.log('get profile Login');    
+    const headers = new HttpHeaders({
+      'Authorization': ['Authorization', this.getToken() ?? '' ],
+      'Custom-Header': 'value'
+    });
+
+    const context = new HttpContext();
+    const userProfile: Profile = {      
+      firstName: 'operis',
+      lastName: 'operis',
+      email: 'julien.boulay@operis.fr',
+      profilePicture: '',
+      favoriteRestaurants: [],
+    };
+    console.log('this.httpClient.patch<Profile>');    
+    console.log('profilMaj');    
+    console.log(profilMaj);    
+    return this.httpClient.patch<Profile>("http://localhost:3000/users/update",profilMaj,{headers,context})
+  }
+
+
   public getToken():string | null {
     return localStorage.getItem('token');
   }
