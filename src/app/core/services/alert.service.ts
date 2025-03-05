@@ -13,23 +13,8 @@ export class AlertService {
   public showAlert$ = this._showAlert.asObservable();
 
   public setAlert(message: string, type: string, active?: boolean): void {
-    if(active === null){active = true}
-    this.timer$.subscribe(
-      (value) => {
-        console.log(
-          'setAlert alertservice message:' + message + ' type' + type
-        );
-        this._showAlert.next({ message: message, type: type});
-        
-      },
-      null,
-      () => {
-        console.log('Timer completed');
 
-      }
-    );
-    
     //console.log('setAlert alertservice message:'+message+' type'+type )
-    //      this._showAlert.next({message:message,type:type});
+    this._showAlert.next({message:message,type:type});
   }
 }
