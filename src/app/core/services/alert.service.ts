@@ -4,8 +4,8 @@ import { BehaviorSubject, interval, take } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AlertService {
-  public timer$ = interval(1000).pipe(take(3));
+export class AlertService {  
+  public timer$ = interval(3000);
   private _showAlert = new BehaviorSubject<{
     message: string;
     type: string;
@@ -13,8 +13,8 @@ export class AlertService {
   public showAlert$ = this._showAlert.asObservable();
 
   public setAlert(message: string, type: string, active?: boolean): void {
-
-    //console.log('setAlert alertservice message:'+message+' type'+type )
-    this._showAlert.next({message:message,type:type});
+    
+    this._showAlert.next({ message: message, type: type});
+    this.timer$.subscribe(() => this._showAlert.next(null));
   }
 }

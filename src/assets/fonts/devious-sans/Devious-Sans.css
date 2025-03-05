@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'DeviousSansBold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('Devious-Sans-Bold.ttf') format('truetype'),       
+}
+
+@font-face {
+  font-family: 'DeviousSansExtraBold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('Devious-Sans-Extra-Bold.ttf') format('truetype'),       
+}
+
+
+@font-face {
+  font-family: 'DeviousSansLight';
+  font-style: normal;
+  font-weight: normal;
+  src: url('Devious-Sans-Light.ttf') format('truetype'),       
+}
+
+
+@font-face {
+  font-family: 'DeviousSansMedium';
+  font-style: normal;
+  font-weight: normal;
+  src: url('Devious-Sans-Medium.ttf') format('truetype'),       
+}
+
+
+@font-face {
+  font-family: 'DeviousSansRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('Devious-Sans-Regular.ttf') format('truetype'),       
+}
+

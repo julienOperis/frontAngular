@@ -3,6 +3,23 @@
 //----------------------------------*/
 @import "assets/fonts/homenaje-regular/homenaje-regular.css";
 @import "assets/fonts/saoui-regular/saoui-regular.css";
+
+
+/**
+* DeviousSansBold
+* DeviousSansExtraBold
+* DeviousSansLight
+* DeviousSansMedium
+* DeviousSansRegular
+**/
+
+@import "assets/fonts/devious-sans/Devious-Sans.css";
+@font-face {
+  font-family: 'oswald';
+  src: url('/font/oswald.regular.ttf');
+}
+
+
 html {
   background-image: url(assets/img/backgrond.png);
 }
