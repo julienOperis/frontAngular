@@ -1,848 +1,3 @@
-# Bien débuter avec Angular
-
-Angular est un framework puissant pour construire des applications web modernes. Ce guide vous aidera ? démarrer et ? comprendre les bases d'Angular pour progresser efficacement.
-
-## Prérequis
-
-Avant de commencer, assurez-vous de maîtriser les concepts de base suivants :
-- **HTML** : pour structurer les composants.
-- **CSS** : pour le style des composants.
-- **JavaScript (et idéalement TypeScript)** : Angular est écrit en TypeScript, donc comprendre les bases de TypeScript est un plus.
-
-## Installation des Outils Nécessaires
-
-Pour utiliser Angular, vous aurez besoin de quelques outils :
-1. **Node.js et npm** : Angular utilise `npm` pour gérer les dépendances.
-   - [Télécharger Node.js](https://nodejs.org/)
-2. **Angular CLI** : La ligne de commande Angular est l'outil principal pour générer, développer et tester les projets Angular.
-   - Installez Angular CLI en exécutant :
-     ```bash
-     npm install -g @angular/cli
-     ```
-
-## Créer Votre Premier Projet Angular
-
-Avec Angular CLI, créez un projet de base :
-```bash
-ng new nom-du-projet
-```
-
-## Extension VS code 
- * Angular 17 Snippets 
- * Angular Snippets (Version 18)
- * Angular Language Service
- * Git Lens
- * Prettier - Code formatter
-
- ***Extension js***
-
-```json
- {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
-  "recommendations": [
-    "angular.ng-template",
-    "mikael.angular-beastcode",
-    "johnpapa.angular2",
-    "eamodio.gitlens",
-    "esbenp.prettier-vscode"
-  ]
-}
-```
-
-### Mettre ne place les extionsions recommandés
-    les extionsions sont dans le dossier ***.vscode***    
-    * [extensions.json](https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions)
-
-
-
-
-
-
-
-# TypeScript
-
-## Launching a Simple TypeScript App
-
-To launch a simple app using TypeScript, you can follow these steps:
-### 1. Set Up Your Project
-
-First, you need to set up a new project directory and initialize it with npm (Node Package Manager).
-
-```bash
-mkdir my-typescript-app
-cd my-typescript-app
-npm init -y
-```
-
-### 2. Install TypeScript
-
-Install TypeScript and the necessary type definitions for Node.js.
-
-```bash
-npm install typescript @types/node --save-dev
-```
-
-### 3. Create a tsconfig.json File
-
-Create a tsconfig.json file in the root of your project to configure the TypeScript compiler.
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true
-  }
-}
-```
-
-### 4. Create Your Project Structure
-
-Create a src directory and add an index.ts file inside it.
-
-```bash
-mkdir src
-touch src/index.ts
-```
-
-### 5. Write Your TypeScript Code
-
-Open src/index.ts and write a simple TypeScript program.
-
-const greet = (name: string): string => {
-  return `Hello, ${name}!`;
-};
-
-console.log(greet("World"));
-
-### 6. Compile Your TypeScript Code
-
-Add a script to your package.json to compile the TypeScript code.
-
-"scripts": {
-  "build": "tsc"
-}
-
-Run the build script to compile your TypeScript code.
-
-```
-npm run build
-```
-
-### 7. Run Your Compiled JavaScript Code
-
-After compiling, you can run the generated JavaScript code using Node.js.
-```bash
-node dist/index.js
-```
-Optional: Watch Mode
-
-You can also set up a watch mode to automatically compile your TypeScript code whenever you make changes. Add the following script to your package.json:
-
-```json
-"scripts": {
-  "build": "tsc",
-  "watch": "tsc --watch"
-}
-```
-
-Run the watch script to start watching for changes.
-
-npm run watch
-
-Optional: Use a Task Runner or Bundler
-
-For more complex projects, you might want to use a task runner like Gulp or a bundler like Webpack. These tools can help you automate tasks and manage dependencies more efficiently.
-
-That's it! You've successfully launched a simple TypeScript app.
-
-
-## Explorer la Structure d’un Projet Angular
-
-Lorsqu'on crée un projet Angular avec Angular CLI, une structure de dossier est automatiquement générée. Voici les dossiers principaux et leurs rôles :
-
-- **src/app** : Contient les composants, services et autres fonctionnalités de l'application. C'est le dossier principal o? vous développerez les fonctionnalités spécifiques de votre application.
-- **app.module.ts** : Le module racine de l’application o? vous importez et déclarez les composants, services et autres modules nécessaires.
-- **main.ts** : Fichier principal qui lance l'application Angular en utilisant `AppModule` comme module racine.
-- **assets** : Dossier pour les fichiers statiques (images, fichiers JSON, etc.).
-- **environments** : Dossier contenant les fichiers de configuration pour les environnements (par exemple, développement ou production).
-
-Familiarisez-vous avec cette structure pour mieux organiser et développer votre application.
-
----
-
-## Comprendre les Composants (Components)
-
-Les composants sont au c?ur d’Angular. Un composant est une classe TypeScript qui contrôle une partie de l’interface utilisateur (UI). Chaque composant est constitué de trois éléments principaux :
-
-1. **Fichier TypeScript (.ts)** : La logique du composant (fichier `.ts`) g?re les données, les événements, et les méthodes.
-2. **Fichier HTML (.html)** : Le template qui définit la structure et le contenu de l’interface utilisateur.
-3. **Fichier CSS/SCSS (.css/.scss)** : Les styles associés au composant pour contrôler son apparence.
-
-Pour créer un composant avec Angular CLI :
-
-```bash
-ng generate component nom-du-composant
-```
-
-
-## Resoudre le probl?mes d'import 
-
-
-```bash
-X [ERROR] TS-992012: Component imports must be standalone components, directives, pipes, or must be NgModules. [plugin angular-compiler]
-
-    src/app/pages/profil/profil.component.ts:10:12:
-      10 ?   imports: [FormGroup],
-         ?             ~~~~~~~~~
-```
-  
-Recherche dans le composant par exemple ***FormGroup*** les @ngModule car les modules nécessaires ne sont pas standelone.
-
-
-```TS
- /*
- * @ngModule ReactiveFormsModule
- * @ngModule FormsModule
- * */
-
-//Dans le composant qui utilise FormGroup
-
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
-@Component({
-  selector: 'app-profil',
-  standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
-  templateUrl: './profil.component.html',
-  styleUrl: './profil.component.scss',
-})
-```
-
-
-
-## Utiliser l'Opérateur de Décomposition (`...`) en TypeScript
-
-L'opérateur de décomposition (`...`) en TypeScript permet de **fusionner des objets** ou de **copier leurs propriétés** dans un nouvel objet. Cette syntaxe est simple et efficace pour concaténer des objets ou créer des copies avec des modifications spécifiques.
-
-### Exemple Basique : Fusion de Deux Objets
-
-Supposons que vous avez deux objets avec certaines propriétés en commun et que vous voulez les fusionner dans un nouvel objet :
-
-```typescript
-const obj1 = { a: 1, b: 2 };
-const obj2 = { b: 3, c: 4 };
-
-const mergedObj = { ...obj1, ...obj2 };
-console.log(mergedObj); // { a: 1, b: 3, c: 4 }
-```
-
-```typescript
-@Injectable({ // Pour dire que c'est un service
-  providedIn: 'root' // Pour dire qu'on partage ce même composant pour les autres composants
-})
-```
-
-
-Comprendre les Composants (Components) , Liaison de Données (Data Binding), Utiliser les Directives , Travailler avec les Services et l’Injection de Dépendances 
-# GetStartedAngular
-GetStartedAngular
-https://ngrx.io/
-https://rxjs.dev/api/operators/
-operator typescript
-
-
-* [https://primeng.org](The Next-Gen UI Suite for Angular)
-* [A progressive Node.js framework for building efficient, reliable and scalable server-side applications.](https://nestjs.com/)
-* [Rapidly build modern websites without ever leaving your HTML](https://tailwindcss.com/)
-
-**Docker**
-* [You can install and run Coder using the official Docker images published on GitHub Container Registry.](https://coder.com/docs/install/docker)
-
-**An import map is a JSON object that allows developers to control how the browser resolves module specifiers when importing**
-* [importmap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
-
-**ionicframework est un framework qui vient au dessus d''angular et qui permet d''avoir le m?me code pour web, ios et android**
-* [Ionic avec Angular Pour faire une application mobile en m?me temps que du web](https://ionicframework.com/)
-* [Application angular multi-langue avec ngx-translate](https://ngx-translate.org/)
-* [Interactive diagrams of Rx Observables](https://rxmarbles.com/)
-* [RxJS Operators](https://rxjs.dev/guide/operators)
-
-**NgRx**
-
-* [NgRx](https://ngrx.io/)
-NgRx est une biblioth?que de gestion d'état pour les applications Angular, basée sur le mod?le Redux. Elle permet de centraliser, gérer et synchroniser l'état (les données) de l'application de mani?re prédictible et efficace. Voici une explication détaillée?:
-
-* Input Parent vers l''enfant Oupout invers pour des composants
-
-# Guards - Protection des routes 
-
-***Un Guard sur Angular est une fonctionnalité qui vous permet de contrôler l'acc?s ? des routes spécifiques dans votre application. Vous pouvez utiliser des guards pour exécuter certaines vérifications ou actions avant de permettre l'acc?s ? une route, par exemple pour vérifier si l'utilisateur est authentifié ou a les droits d'acc?s appropriés.**
-
-1. Créez un guard, par exemple dans un fichier auth.guard.ts :
-
-```TS
-import { inject } from "@angular/core";
-import { Router } from "@angular/router";
-
-export const AuthGuard = () => {
-    return true
-}
-```
-
-Utilisez ce guard dans votre route (dans le fichier app.routes.ts par exemple) :
-
-```TS
-import { AuthGuard } from './auth.guard';
-import { AdminComponent } from './admin.component';
-
-const routes: Routes = [
-  {
-    path: 'admin',
-    component: AdminComponent,
-    canActivate: [AuthGuard], // Utilisation du guard
-  }
-];
-```
-Exemple avec l'authentification
-Voici un exemple de service d'authentification que vous pouvez utiliser avec le guard ci-dessus :
-
-
-Qu'est qu'un guard sur Angular ? [?](#qu-est-qu-un-guard-sur-angular)
-=====================================================================
-
-Un Guard sur Angular est une fonctionnalité qui vous permet de contrôler l'acc?s ? des routes spécifiques dans votre application. Vous pouvez utiliser des guards pour exécuter certaines vérifications ou actions avant de permettre l'acc?s ? une route, par exemple pour vérifier si l'utilisateur est authentifié ou a les droits d'acc?s appropriés.
-
-Voici un exemple tr?s simple
-
-1.  Créez un guard, par exemple dans un fichier `auth.guard.ts` :
-
-```TS
-    import { inject } from "@angular/core";
-    import { Router } from "@angular/router";
-    
-    export const AuthGuard = () => {
-        return true
-    }
-```
-
-1.  Utilisez ce guard dans votre route (dans le fichier `app.routes.ts` par exemple) :
-
-```TS
-
-    import { AuthGuard } from './auth.guard';
-    import { AdminComponent } from './admin.component';
-    
-    const routes: Routes = [
-      {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuard], // Utilisation du guard
-      }
-    ];
-```
-
-Exemple avec l'authentification [?](#exemple-avec-l-authentification)
----------------------------------------------------------------------
-
-Voici un exemple de service d'authentification que vous pouvez utiliser avec le guard ci-dessus :
-
-```TS
-    import { Injectable } from '@angular/core';
-    
-    @Injectable({
-      providedIn: 'root'
-    })
-    export class AuthService {
-      private isAuthenticated = false;
-    
-      login() {
-        this.isAuthenticated = true;
-      }
-    
-      logout() {
-        this.isAuthenticated = false;
-      }
-    
-      isAuthenticated(): boolean {
-        return this.isAuthenticated;
-      }
-    }
-```
-
-Ce service contient une méthode `login` qui définit la variable `isAuthenticated` sur `true`, une méthode `logout` qui définit la variable `isAuthenticated` sur `false`, et une méthode `isAuthenticated` qui retourne la valeur de la variable `isAuthenticated`. Vous pouvez utiliser ces méthodes pour gérer l'authentification de l'utilisateur et pour contrôler l'acc?s ? certaines routes avec le guard `AuthGuard`.
-
-> Notez que cet exemple est tr?s simplifié et ne prend pas en compte la persistance de l'état d'authentification entre les sessions ou la vérification des données d'identification de l'utilisateur. Il est recommandé de mettre en place une gestion de l'authentification plus compl?te et sécurisée dans votre application.
-
-### Le guard [?](#le-guard)
-
-Voici un exemple de guard qui vérifie si l'utilisateur est connecté ? l'application avant de lui permettre l'acc?s ? une route :
-
-```TS
-    import { inject } from "@angular/core";
-    import { Router } from "@angular/router";
-    import { AuthService } from "./auth.service";
-    
-    export const AuthGuard = () => {
-        const auth = inject(AuthService);
-        const router = inject(Router);
-    
-        if(!auth.isAuthenticated()) {
-            router.navigateByUrl('/login')
-            return false
-        }
-        return true
-    }
-```
-
-Dans ce cas, le code crée un "AuthGuard" qui vérifie si un utilisateur est authentifié avant de lui permettre d'accéder ? une route protégée.
-
-1.  On crée la fonction `AuthGuard` qui sera utilisée comme guard. Dans cette fonction, on injecte les dépendances pour `AuthService` et `Router`.
-    
-2.  On vérifie si l'utilisateur est authentifié en utilisant la méthode `isAuthenticated()` de l'instance `auth`. Cette méthode doit ?tre implémentée dans le service d'authentification (`AuthService`) pour déterminer si un utilisateur est authentifié ou non.
-    
-3.  Si l'utilisateur n'est pas authentifié (c'est-?-dire si `auth.isAuthenticated()` renvoie `false`), on redirige l'utilisateur vers la page de connexion en utilisant la méthode `navigateByUrl('/login')` de l'instance `router`. Ensuite, on retourne `false` pour indiquer que l'acc?s ? la route protégée n'est pas autorisé.
-    
-4.  Si l'utilisateur est authentifié, on retourne simplement `true`, ce qui permet l'acc?s ? la route protégée.
-    
-
-On l'applique au routeur:
-
-```TS
-    // ... code précédent
-    
-    const routes: Routes = [
-      {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuard], // Utilisation du guard
-      }
-    ];
-```
-
-Vous pouvez également utiliser ce guard pour protéger plusieurs routes en utilisant un tableau de routes imbriquées, comme ceci :
-
-```TS
-
-    // ... code précédent
-    
-    const routes: Routes = [
-      {
-        path: 'admin',
-        canActivate: [AuthGuard], // Utilisation du guard
-        children: [
-          {
-            path: '',
-            component: AdminComponent
-          },
-          {
-            path: 'users',
-            component: UsersComponent
-          }
-        ]
-      }
-    ];
-```
-Dans cet exemple, le guard `AuthGuard` sera utilisé pour contrôler l'acc?s ? toutes les routes enfants de `/admin`, y compris `/admin` et `/admin/users`. Si l'utilisateur n'est pas connecté, il ne pourra pas accéder ? aucune de ces routes.
-
-
-
-
-* Resolvers - Permet de faire des choses avant l''initialisation des pages, (Information du profil utilisateurs au chargement de la page utilisateur )
-* Interceptors - Intecepter les requ?te http, pour la gestion d''erreur 
-* Store - Service Angular ou (Librairies ngRx plus tard) Moyen de partager les données sans qu''il soit parents
-
-# Exemple d'interface générique pour gestion erreur API (back) :
-
-```TS
-interface ApiErrorResponse { 
-    message: string, // Message explicatif global pour l'utilisateur 
-    details: Details[], // Liste d'erreurs compl?te
-    metadonnees: { 
-      timestamp: string, // Moment de l'erreur au format ISO 
-      endpoint: string, // URL appelée (doit-on mettre le nom de domaine?) 
-      correlationId: string, // Identifiant de la requ?te pour pouvoir la suivre dans tous les services impactés (UUID) 
-    } 
-  } interface Details { // Champs présent pour tous les cas possibles code: string, // Un code identifiant l'erreur de façon unique pour simplifier le débogage. Ex : FORMAT_INVALIDE, OBLIGATOIRE message: string, // Message explicatif de cette erreur particuli?re pour l'utilisateur parametres:   Record<string, any>, // Morceaux dynamiques du message d'erreur si besoin de le reformuler pour différents persona localisation: string[], // Chemin dans la requ?te vers la partie problématique, permet de pointer précisément et programmatiquement. Ex : [ "body", "champs", "DX1NZ5" ] ou [ "headers", "Accept" ] 
-  } 
-```
-
-
-# Observable exemple d'utilisation
-
-```TS
- public inscription(): void {
-    //Observable<User>
-
-    this.inscriptionService
-      .inscription$(this.inscriptionForm.value)
-      .pipe(
-        take(1),
-        catchError((error) => {
-          console.error(error);
-          this.alertService.setAlert('Une erreur est survenue');
-          return EMPTY; //Couper le flux,
-        }),
-        tap((reponse) => {
-          this.serviceSuccess.setDataSuccess(reponse);
-          this.router.navigate(['/connexion']);
-        })
-      )
-      .subscribe();
-    //status: 409, error statusCode	409
-    //status: 201, Create
-  }
-```
-
-### **Déroulement du Code**
-
-1. **Récupération des données du formulaire** :
-   - `this.inscriptionForm.value` : extrait les données saisies par l'utilisateur dans le formulaire.
-
-2. **Appel au service `inscription$`** :
-   - `this.inscriptionService.inscription$(...)` : envoie les données du formulaire au backend via un service. Ce service renvoie un **Observable** contenant la réponse du serveur.
-
-3. **Chaînage des opérateurs RxJS** :
-   - `pipe(...)` : permet d'appliquer des transformations ou de gérer les erreurs dans le flux d'observable.
-
-   #### Opérateurs utilisés :
-   - **`take(1)`** :
-     - Ne prend en compte qu'une seule réponse du serveur (unsubscribe automatiquement apr?s la premi?re émission).
-   - **`catchError((error) => {...})`** :
-     - En cas d'erreur (ex. : réponse HTTP avec un code 409 ou 500), l'erreur est capturée.
-     - La méthode affiche un message d'erreur avec `this.alertService.setAlert('Une erreur est survenue')`.
-     - `return EMPTY` : stoppe le flux d'observable sans émettre d'autres événements.
-   - **`tap((reponse) => {...})`** :
-     - Permet de gérer une réponse réussie du serveur (ex. : code HTTP 201).
-     - Actions effectuées :
-       - Appel de `this.serviceSuccess.setDataSuccess(reponse)` pour stocker les données de succ?s.
-       - Navigation vers la route `/connexion` avec `this.router.navigate(['/connexion'])`.
-
-4. **Abonnement avec `subscribe()`** :
-   - Finalise l'exécution de l'observable en déclenchant le flux défini dans les étapes précédentes.
-
-# Structure d'un projet basique Angular
-
-src
-??? app
-?   ??? components **Composants Angular**
-?   ?   ??? alert
-?   ?   ??? dialoggeneric
-?   ?   ??? header
-?   ??? core ** Angular**
-?   ?   ??? models
-?   ?   ??? services **Services Angular sont des classes dédiées ? la logique métier et au partage des données**
-?   ?   ??? validators **validateur qui vérifie la validité des données saisies**
-?   ??? pages
-
-
-## Service
-
-# Résumé des Services Angular
-
-## Qu'est-ce qu'un Service Angular ?
-
-Un **service** Angular est une classe qui fournit des fonctionnalités ou des comportements réutilisables dans l'application. Les services permettent de centraliser la logique métier et de partager des données ou des fonctionnalités entre les composants.
-
-## Pourquoi utiliser des services ?
-
-Les services permettent de :
-- Centraliser la logique de l'application.
-- Partager des données entre différents composants.
-- Manipuler des données de mani?re asynchrone (par exemple, via HTTP).
-- Faciliter les tests unitaires en isolant la logique dans des classes dédiées.
-
-## Création d'un Service
-
-Un service Angular est généralement créé avec la commande CLI suivante :
-```bash
-ng generate service service-name
-```
-
-```TS
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root', // Rend le service disponible dans toute l'application
-})
-export class DataService {
-  constructor() {}
-
-  getData() {
-    return 'Some data';
-  }
-}
-```
-
-## Injection de Dépendance
-
-Les services dans Angular utilisent l'injection de dépendance (DI) pour ?tre fournis aux composants ou autres services. Cela permet ? Angular de gérer la création et la gestion de l'instance du service.
-
-
-Exemple d'Injection dans un Composant
-
-```TS
-import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
-
-@Component({
-  selector: 'app-my-component',
-  template: '<div>{{ data }}</div>',
-})
-export class MyComponent implements OnInit {
-  data: string;
-
-  constructor(private dataService: DataService) {}
-
-  ngOnInit() {
-    this.data = this.dataService.getData();
-  }
-}
-```
-
-
-## Validators
-
-### Voici quelques exemples de validateurs intégrés :
-
-| **Validateur**             | **Description**                                        |
-|----------------------------|-------------------------------------------------------|
-| `Validators.required`      | Vérifie que le champ n'est pas vide.                  |
-| `Validators.min(length)`   | Vérifie que la valeur est supérieure ou égale ? un minimum. |
-| `Validators.max(length)`   | Vérifie que la valeur est inférieure ou égale ? un maximum. |
-| `Validators.minLength(length)` | Vérifie que la longueur minimale est respectée.         |
-| `Validators.maxLength(length)` | Vérifie que la longueur maximale est respectée.         |
-| `Validators.pattern(regex)`    | Vérifie que la valeur correspond ? une expression réguli?re. |
-
-#### Exemple d'utilisation :
-```typescript
-import { FormBuilder, Validators } from '@angular/forms';
-
-export class ExampleComponent {
-  myForm = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(5)]],
-    email: ['', [Validators.required, Validators.email]],
-    age: ['', [Validators.min(18), Validators.max(99)]]
-  });
-
-  constructor(private fb: FormBuilder) {}
-
-  submit() {
-    if (this.myForm.valid) {
-      console.log('Formulaire valide?:', this.myForm.value);
-    } else {
-      console.log('Formulaire invalide?!');
-    }
-  }
-}
-```
-
-### **Résumé**
-
-Un validateur Angular est une méthode clé pour garantir la validité des données saisies dans les formulaires. Vous pouvez :
-
-- **Utiliser des validateurs intégrés** pour des r?gles standard comme `Validators.required`, `Validators.minLength`, etc.
-- **Créer vos propres validateurs personnalisés** pour des cas spécifiques, comme vérifier un domaine d'e-mail ou des r?gles métier particuli?res.
-- **Étendre les validateurs avec des opérations asynchrones** pour des vérifications qui nécessitent un appel réseau (par exemple, vérifier si un nom d'utilisateur existe déj? dans une base de données).
-
-Cela améliore :
-- **La robustesse** des données saisies.
-- **La sécurité** des informations collectées.
-- **La maintenabilité** et la testabilité des applications Angular.
-
-Les validateurs permettent de garantir que les données entrantes respectent les exigences avant d’?tre traitées ou envoyées ? un serveur.
-
-
-# Tuto
-## ANGULAR
-
-[Get started Javascript](https://www.w3schools.com/js/)
-
-[Get started TypeScript](https://www.typescriptlang.org/fr/docs/handbook/typescript-in-5-minutes.html)
-
-[Get started with The Angular CLI](https://angular.dev/tools/cli)
-
-[Get started with rxjs](https://rxjs.dev/guide/overview)
-
-[Stocker un état dans un service avec BehaviorSubject ](https://angular.fr/services/behavior-subject)
-
-[Comment afficher une boîte de dialogue modale dans Angular](https://hackernoon.com/lang/fr/comment-afficher-une-bo%C3%AEte-de-dialogue-modale-en-angulaire)
-
-
-**Installation**
-```
-npm install @developer-partners/ngx-modal-dialog
-```
-
-# Les Opérateurs en TypeScript
-
-TypeScript, étant une surcouche de JavaScript, prend en charge les m?mes opérateurs que JavaScript. Voici une liste détaillée des différents types d'opérateurs avec des exemples et explications.
-
----
-
-## 1. **Opérateurs Arithmétiques**
-Utilisés pour effectuer des calculs mathématiques.
-
-| Opérateur | Description         | Exemple          | Résultat  |
-|-----------|---------------------|------------------|-----------|
-| `+`       | Addition            | `5 + 2`          | `7`       |
-| `-`       | Soustraction        | `5 - 2`          | `3`       |
-| `*`       | Multiplication      | `5 * 2`          | `10`      |
-| `/`       | Division            | `5 / 2`          | `2.5`     |
-| `%`       | Modulo (reste)      | `5 % 2`          | `1`       |
-| `++`      | Incrémentation      | `let a = 5; a++` | `6`       |
-| `--`      | Décrémentation      | `let a = 5; a--` | `4`       |
-
----
-
-## 2. **Opérateurs de Comparaison**
-Utilisés pour comparer deux valeurs et retourner un booléen (`true` ou `false`).
-
-| Opérateur | Description                        | Exemple          | Résultat |
-|-----------|------------------------------------|------------------|----------|
-| `==`      | Égalité de valeur                 | `5 == '5'`       | `true`   |
-| `===`     | Égalité stricte (valeur + type)   | `5 === '5'`      | `false`  |
-| `!=`      | Différence de valeur             | `5 != '5'`       | `false`  |
-| `!==`     | Différence stricte               | `5 !== '5'`      | `true`   |
-| `<`       | Inférieur ?                      | `5 < 10`         | `true`   |
-| `>`       | Supérieur ?                      | `5 > 10`         | `false`  |
-| `<=`      | Inférieur ou égal                | `5 <= 5`         | `true`   |
-| `>=`      | Supérieur ou égal                | `5 >= 6`         | `false`  |
-
----
-
-## 3. **Opérateurs Logiques**
-Utilisés pour combiner plusieurs conditions.
-
-| Opérateur | Description                     | Exemple                  | Résultat |
-|-----------|---------------------------------|--------------------------|----------|
-| `&&`      | ET logique                     | `true && false`          | `false`  |
-| `||`      | OU logique                     | `true || false`          | `true`   |
-| `!`       | NON logique (négation)         | `!true`                  | `false`  |
-
----
-
-## 4. **Opérateurs Bit-?-Bit**
-Op?rent directement sur les représentations binaires des nombres.
-
-| Opérateur | Description                     | Exemple        | Résultat |
-|-----------|---------------------------------|----------------|----------|
-| `&`       | ET bit-?-bit                   | `5 & 1`        | `1`      |
-| `|`       | OU bit-?-bit                  | `5 | 1`        | `5`      |
-| `^`       | OU exclusif (XOR)             | `5 ^ 1`        | `4`      |
-| `~`       | NON bit-?-bit                 | `~5`           | `-6`     |
-| `<<`      | Décalage ? gauche             | `5 << 1`       | `10`     |
-| `>>`      | Décalage ? droite             | `5 >> 1`       | `2`      |
-| `>>>`     | Décalage ? droite sans signe  | `5 >>> 1`      | `2`      |
-
----
-
-## 5. **Opérateurs d'Assignation**
-Utilisés pour attribuer une valeur ? une variable.
-
-| Opérateur | Description                  | Exemple      | Résultat |
-|-----------|------------------------------|--------------|----------|
-| `=`       | Assignation simple           | `a = 5`      | `a = 5`  |
-| `+=`      | Addition et assignation      | `a += 2`     | `a = 7`  |
-| `-=`      | Soustraction et assignation  | `a -= 2`     | `a = 3`  |
-| `*=`      | Multiplication et assignation| `a *= 2`     | `a = 10` |
-| `/=`      | Division et assignation      | `a /= 2`     | `a = 2.5`|
-| `%=`      | Modulo et assignation        | `a %= 2`     | `a = 1`  |
-
----
-
-## 6. **Opérateur Ternaire**
-Simplifie les expressions conditionnelles.
-
-**Syntaxe :**
-```typescript
-condition ? valeurSiVrai : valeurSiFaux;
-```
-
-**Exemple :**
-```typescript
-const age = 18;
-const isAdult = age >= 18 ? 'Oui' : 'Non'; // Résultat : 'Oui'
-```
-
----
-
-## 7. **Opérateurs de Chaîne**
-
-| Opérateur | Description             | Exemple             | Résultat         |
-|-----------|-------------------------|---------------------|------------------|
-| `+`       | Concaténation de chaîne| `'Hello' + 'World'` | `'HelloWorld'`   |
-| `+=`      | Concaténation et assignation | `a += 'World'` | `a = 'HelloWorld'` |
-
----
-
-## 8. **Opérateurs de Type (TypeScript)**
-Spécifiques ? TypeScript pour vérifier ou convertir des types.
-
-| Opérateur | Description                             | Exemple                       | Résultat          |
-|-----------|-----------------------------------------|-------------------------------|-------------------|
-| `typeof`  | Renvoie le type d'une variable         | `typeof 42`                  | `'number'`        |
-| `instanceof` | Vérifie si un objet appartient ? une classe | `obj instanceof MyClass` | `true / false`    |
-| `as`      | Conversion de type explicite           | `value as string`            | `string`          |
-| `<type>`  | Conversion de type (alternative ? `as`) | `<string>value`              | `string`          |
-
----
-
-## 9. **Opérateurs Optionnels (TypeScript)**
-
-### a. **Opérateur de Chaînage Optionnel (`?.`)**
-Permet d'accéder ? une propriété sans vérifier explicitement si l'objet est défini.
-
-**Exemple :**
-```typescript
-const user = { name: 'John', address: null };
-console.log(user?.address?.city); // Résultat : undefined
-```
-
-### b. **Opérateur de Coalescence Nulle (`??`)**
-Retourne la valeur de droite uniquement si la valeur de gauche est `null` ou `undefined`.
-
-**Exemple :**
-```typescript
-const name = null;
-const defaultName = name ?? 'Anonymous'; // Résultat : 'Anonymous'
-```
-
----
-
-## 10. **Opérateurs Avancés (ES6+)**
-
-| Opérateur          | Description                               | Exemple                        | Résultat           |
-|--------------------|-------------------------------------------|--------------------------------|--------------------|
-| `...` (spread)     | Étale les éléments d'un tableau ou objet  | `[...array1, ...array2]`      | Nouveau tableau    |
-| `...` (rest)       | Rassemble les arguments restants          | `function(...args) {}`        | Tableau d'arguments|
-
----
-
-Ce guide couvre les opérateurs les plus couramment utilisés en TypeScript. Pour aller plus loin, vous pouvez explorer leur comportement spécifique dans le contexte de types complexes et de fonctionnalités avancées de TypeScript.
-
-
-# Tâche en cours
-## AFAIRE
-
-* Remonte les erreurs du back au Front dans l'alert
-* Faire la session avec le LocalStorage
-
-
-
-
-
-
-
-
-
-
-# TypeScript Langage Specification
-
-
 # TypeScript Language Specification
 
 Version 1.8 TypeScript-4.9.3
@@ -959,13 +114,13 @@ TypeScript is a trademark of Microsoft Corporation.
   * [4.17 JSX Expressions](#4.17)
   * [4.18 Unary Operators](#4.18)
     * [4.18.1 The ++ and -- operators](#4.18.1)
-    * [4.18.2 The +, –, and ~ operators](#4.18.2)
+    * [4.18.2 The +, â€“, and ~ operators](#4.18.2)
     * [4.18.3 The ! operator](#4.18.3)
     * [4.18.4 The delete Operator](#4.18.4)
     * [4.18.5 The void Operator](#4.18.5)
     * [4.18.6 The typeof Operator](#4.18.6)
   * [4.19 Binary Operators](#4.19)
-    * [4.19.1 The *, /, %, –, &lt;&lt;, >>, >>>, &, ^, and | operators](#4.19.1)
+    * [4.19.1 The *, /, %, â€“, &lt;&lt;, >>, >>>, &, ^, and | operators](#4.19.1)
     * [4.19.2 The + operator](#4.19.2)
     * [4.19.3 The &lt;, >, &lt;=, >=, ==, !=, ===, and !== operators](#4.19.3)
     * [4.19.4 The instanceof operator](#4.19.4)
@@ -1634,12 +789,12 @@ The remainder of this document is the formal specification of the TypeScript pro
 The syntactic grammar added by TypeScript language is specified throughout this document using the existing conventions and production names of the ECMAScript grammar. In places where TypeScript augments an existing grammar production it is so noted. For example:
 
 &emsp;&emsp;*Declaration:*  *( Modified )*  
-&emsp;&emsp;&emsp;…  
+&emsp;&emsp;&emsp;â€¦  
 &emsp;&emsp;&emsp;*InterfaceDeclaration*  
 &emsp;&emsp;&emsp;*TypeAliasDeclaration*  
 &emsp;&emsp;&emsp;*EnumDeclaration*
 
-The '*( Modified )*' annotation indicates that an existing grammar production is being replaced, and the '…' references the contents of the original grammar production.
+The '*( Modified )*' annotation indicates that an existing grammar production is being replaced, and the 'â€¦' references the contents of the original grammar production.
 
 Similar to the ECMAScript grammar, if the phrase "*[no LineTerminator here]*" appears in the right-hand side of a production of the syntactic grammar, it indicates that the production is not a match if a *LineTerminator* occurs in the input stream at the indicated position.
 
@@ -1784,7 +939,7 @@ Declaration spaces exist as follows:
 
 * The global namespace, each module, and each declared namespace has a declaration space for its contained entities (whether local or exported).
 * Each module has a declaration space for its exported entities. All export declarations in the module contribute to this declaration space.
-* Each declared namespace has a declaration space for its exported entities. All export declarations in the namespace contribute to this declaration space. A declared namespace’s declaration space is shared with other declared namespaces that have the same root container and the same qualified name starting from that root container.
+* Each declared namespace has a declaration space for its exported entities. All export declarations in the namespace contribute to this declaration space. A declared namespaceâ€™s declaration space is shared with other declared namespaces that have the same root container and the same qualified name starting from that root container.
 * Each class declaration has a declaration space for instance members and type parameters, and a declaration space for static members.
 * Each interface declaration has a declaration space for members and type parameters. An interface's declaration space is shared with other interfaces that have the same root container and the same qualified name starting from that root container.
 * Each enum declaration has a declaration space for its enum members. An enum's declaration space is shared with other enums that have the same root container and the same qualified name starting from that root container.
@@ -1805,7 +960,7 @@ The ***container*** of an entity is defined as follows:
 
 The ***root container*** of an entity is defined as follows:
 
-* The root container of a non-exported entity is the entity’s container.
+* The root container of a non-exported entity is the entityâ€™s container.
 * The root container of an exported entity is the root container of the entity's container.
 
 Intuitively, the root container of an entity is the outermost module or namespace body from within which the entity is reachable.
@@ -1848,7 +1003,7 @@ When an identifier is resolved as a *NamespaceName* (section [3.8.2](#3.8.2)), o
 
 *TODO: [Include specific rules for alias resolution](https://github.com/Microsoft/TypeScript/issues/3158)*.
 
-Note that class and interface members are never directly in scope—they can only be accessed by applying the dot ('.') operator to a class or interface instance. This even includes members of the current instance in a constructor or member function, which are accessed by applying the dot operator to `this`.
+Note that class and interface members are never directly in scopeâ€”they can only be accessed by applying the dot ('.') operator to a class or interface instance. This even includes members of the current instance in a constructor or member function, which are accessed by applying the dot operator to `this`.
 
 As the rules above imply, locally declared entities in a namespace are closer in scope than exported entities declared in other namespace declarations for the same namespace. For example:
 
@@ -1875,7 +1030,7 @@ TypeScript adds optional static types to JavaScript. Types are used to place sta
 
 All types in TypeScript are subtypes of a single top type called the Any type. The `any` keyword references this type. The Any type is the one type that can represent *any* JavaScript value with no constraints. All other types are categorized as ***primitive types***, ***object types***, ***union types***, ***intersection types***, or ***type parameters***. These types introduce various static constraints on their values.
 
-The primitive types are the Number, Boolean, String, Symbol, Void, Null, and Undefined types along with user defined enum types. The `number`, `boolean`, `string`, `symbol`, and `void` keywords reference the Number, Boolean, String, Symbol, and Void primitive types respectively. The Void type exists purely to indicate the absence of a value, such as in a function with no return value. It is not possible to explicitly reference the Null and Undefined types—only *values* of those types can be referenced, using the `null` and `undefined` literals.
+The primitive types are the Number, Boolean, String, Symbol, Void, Null, and Undefined types along with user defined enum types. The `number`, `boolean`, `string`, `symbol`, and `void` keywords reference the Number, Boolean, String, Symbol, and Void primitive types respectively. The Void type exists purely to indicate the absence of a value, such as in a function with no return value. It is not possible to explicitly reference the Null and Undefined typesâ€”only *values* of those types can be referenced, using the `null` and `undefined` literals.
 
 The object types are all class, interface, array, tuple, function, and constructor types. Class and interface types are introduced through class and interface declarations and are referenced by the name given to them in their declarations. Class and interface types may be ***generic types*** which have one or more type parameters.
 
@@ -2347,7 +1502,7 @@ The process of substituting type arguments for type parameters in a generic type
 
 Every class and interface has a ***this-type*** that represents the actual type of instances of the class or interface within the declaration of the class or interface. The this-type is referenced using the keyword `this` in a type position. Within instance methods and constructors of a class, the type of the expression `this` (section [4.2](#4.2)) is the this-type of the class.
 
-Classes and interfaces support inheritance and therefore the instance represented by `this` in a method isn't necessarily an instance of the containing class—it may in fact be an instance of a derived class or interface. To model this relationship, the this-type of a class or interface is classified as a type parameter. Unlike other type parameters, it is not possible to explicitly pass a type argument for a this-type. Instead, in a type reference to a class or interface type, the type reference *itself* is implicitly passed as a type argument for the this-type. For example:
+Classes and interfaces support inheritance and therefore the instance represented by `this` in a method isn't necessarily an instance of the containing classâ€”it may in fact be an instance of a derived class or interface. To model this relationship, the this-type of a class or interface is classified as a type parameter. Unlike other type parameters, it is not possible to explicitly pass a type argument for a this-type. Instead, in a type reference to a class or interface type, the type reference *itself* is implicitly passed as a type argument for the this-type. For example:
 
 ```TypeScript
 class A {  
@@ -2378,7 +1533,7 @@ Interface declarations only introduce named types, whereas class declarations in
 
 Named types are referenced through ***type references*** (section [3.8.2](#3.8.2)) that specify a type name and, if applicable, the type arguments to be substituted for the type parameters of the named type.
 
-Named types are technically not types—only *references* to named types are. This distinction is particularly evident with generic types: Generic types are "templates" from which multiple *actual* types can be created by writing type references that supply type arguments to substitute in place of the generic type's type parameters. This substitution process is known as ***instantiating*** a generic type. Only once a generic type is instantiated does it denote an actual type.
+Named types are technically not typesâ€”only *references* to named types are. This distinction is particularly evident with generic types: Generic types are "templates" from which multiple *actual* types can be created by writing type references that supply type arguments to substitute in place of the generic type's type parameters. This substitution process is known as ***instantiating*** a generic type. Only once a generic type is instantiated does it denote an actual type.
 
 TypeScript has a structural type system, and therefore an instantiation of a generic type is indistinguishable from an equivalent manually written expansion. For example, given the declaration
 
@@ -3055,7 +2210,7 @@ The ***apparent members*** of a type are the members observed in subtype, supert
 
 If a type is not one of the above, it is considered to have no apparent members.
 
-In effect, a type's apparent members make it a subtype of the 'Object' or 'Function' interface unless the type defines members that are incompatible with those of the 'Object' or 'Function' interface—which, for example, occurs if the type defines a property with the same name as a property in the 'Object' or 'Function' interface but with a type that isn't a subtype of that in the 'Object' or 'Function' interface.
+In effect, a type's apparent members make it a subtype of the 'Object' or 'Function' interface unless the type defines members that are incompatible with those of the 'Object' or 'Function' interfaceâ€”which, for example, occurs if the type defines a property with the same name as a property in the 'Object' or 'Function' interface but with a type that isn't a subtype of that in the 'Object' or 'Function' interface.
 
 Some examples:
 
@@ -3800,7 +2955,7 @@ A signature is said to be an ***applicable signature*** with respect to an argum
 
 ### <a name="4.15.2"/>4.15.2 Type Argument Inference
 
-Given a signature &lt; *T<sub>1</sub>* , *T<sub>2</sub>* , … , *T<sub>n</sub>* > ( *p<sub>1</sub>* : *P<sub>1</sub>* , *p<sub>2</sub>* : *P<sub>2</sub>* , … , *p<sub>m</sub>* : *P<sub>m</sub>* ), where each parameter type *P* references zero or more of the type parameters *T*, and an argument list ( *e<sub>1</sub>* , *e<sub>2</sub>* , … , *e<sub>m</sub>* ), the task of type argument inference is to find a set of type arguments *A<sub>1</sub>*…*A<sub>n</sub>* to substitute for *T<sub>1</sub>*…*T<sub>n</sub>* such that the argument list becomes an applicable signature.
+Given a signature &lt; *T<sub>1</sub>* , *T<sub>2</sub>* , â€¦ , *T<sub>n</sub>* > ( *p<sub>1</sub>* : *P<sub>1</sub>* , *p<sub>2</sub>* : *P<sub>2</sub>* , â€¦ , *p<sub>m</sub>* : *P<sub>m</sub>* ), where each parameter type *P* references zero or more of the type parameters *T*, and an argument list ( *e<sub>1</sub>* , *e<sub>2</sub>* , â€¦ , *e<sub>m</sub>* ), the task of type argument inference is to find a set of type arguments *A<sub>1</sub>*â€¦*A<sub>n</sub>* to substitute for *T<sub>1</sub>*â€¦*T<sub>n</sub>* such that the argument list becomes an applicable signature.
 
 *TODO: Update [type argument inference and overload resolution rules](https://github.com/Microsoft/TypeScript/issues/1186)*.
 
@@ -3911,7 +3066,7 @@ are both interpreted as calls to 'f' with two arguments.
 TypeScript extends the JavaScript expression grammar with the ability to assert a type for an expression:
 
 &emsp;&emsp;*UnaryExpression:*  *( Modified )*  
-&emsp;&emsp;&emsp;…  
+&emsp;&emsp;&emsp;â€¦  
 &emsp;&emsp;&emsp;`<`&emsp;*Type*&emsp;`>`&emsp;*UnaryExpression*
 
 A type assertion expression consists of a type enclosed in `<` and `>` followed by a unary expression. Type assertion expressions are purely a compile-time construct. Type assertions are *not* checked at run-time and have no impact on the emitted JavaScript (and therefore no run-time cost). The type and the enclosing `<` and `>` are simply removed from the generated code.
@@ -3959,7 +3114,7 @@ The subsections that follow specify the compile-time processing rules of the una
 
 These operators, in prefix or postfix form, require their operand to be of type Any, the Number primitive type, or an enum type, and classified as a reference (section [4.1](#4.1)). They produce a result of the Number primitive type.
 
-### <a name="4.18.2"/>4.18.2 The +, –, and ~ operators
+### <a name="4.18.2"/>4.18.2 The +, â€“, and ~ operators
 
 These operators permit their operand to be of any type and produce a result of the Number primitive type.
 
@@ -4011,7 +3166,7 @@ In the example above, 'x' is of type 'number', 'y' is of type 'string' because w
 
 The subsections that follow specify the compile-time processing rules of the binary operators. In general, if the operands of a binary operator do not meet the stated requirements, a compile-time error occurs and the result of the operation defaults to type any in further processing. Tables that summarize the compile-time processing rules for operands of the Any type, the Boolean, Number, and String primitive types, and all other types (the Other column in the tables) are provided.
 
-### <a name="4.19.1"/>4.19.1 The *, /, %, –, &lt;&lt;, >>, >>>, &, ^, and | operators
+### <a name="4.19.1"/>4.19.1 The *, /, %, â€“, &lt;&lt;, >>, >>>, &, ^, and | operators
 
 These operators require their operands to be of type Any, the Number primitive type, or an enum type. Operands of an enum type are treated as having the primitive type Number. If one operand is the `null` or `undefined` value, it is treated as having the type of the other operand. The result is always of the Number primitive type.
 
@@ -4358,7 +3513,7 @@ This chapter describes the static type checking TypeScript provides for JavaScri
 Blocks are extended to include local interface, type alias, and enum declarations (classes are already included by the ECMAScript 2015 grammar).
 
 &emsp;&emsp;*Declaration:*  *( Modified )*  
-&emsp;&emsp;&emsp;…  
+&emsp;&emsp;&emsp;â€¦  
 &emsp;&emsp;&emsp;*InterfaceDeclaration*  
 &emsp;&emsp;&emsp;*TypeAliasDeclaration*  
 &emsp;&emsp;&emsp;*EnumDeclaration*
@@ -4828,7 +3983,7 @@ function drawText({ text, location: [x, y], bold }: DrawTextInfo) {
 
 ## <a name="6.5"/>6.5 Generic Functions
 
-A function implementation may include type parameters in its signature (section [3.9.2.1](#3.9.2.1)) and is then called a ***generic function***. Type parameters provide a mechanism for expressing relationships between parameter and return types in call operations. Type parameters have no run-time representation—they are purely a compile-time construct.
+A function implementation may include type parameters in its signature (section [3.9.2.1](#3.9.2.1)) and is then called a ***generic function***. Type parameters provide a mechanism for expressing relationships between parameter and return types in call operations. Type parameters have no run-time representationâ€”they are purely a compile-time construct.
 
 Type parameters declared in the signature of a function implementation are in scope in the signature and body of that function implementation.
 
@@ -4904,7 +4059,7 @@ where *Parameter* is the parameter name and *Default* is the default value expre
 
 Interfaces provide the ability to name and parameterize object types and to compose existing named object types into new ones.
 
-Interfaces have no run-time representation—they are purely a compile-time construct. Interfaces are particularly useful for documenting and validating the required shape of properties, objects passed as parameters, and objects returned from functions.
+Interfaces have no run-time representationâ€”they are purely a compile-time construct. Interfaces are particularly useful for documenting and validating the required shape of properties, objects passed as parameters, and objects returned from functions.
 
 Because TypeScript has a structural type system, an interface type with a particular set of members is considered identical to, and can be substituted for, another interface type or object type literal with an identical set of members (see section [3.11.2](#3.11.2)).
 
@@ -5174,11 +4329,11 @@ When evaluated as an expression, the type reference 'A' in the `extends` clause 
 
 The only situation in which the last two constraints above are violated is when a class overrides one or more base class members with incompatible new members.
 
-Note that because TypeScript has a structural type system, a class doesn't need to explicitly state that it implements an interface—it suffices for the class to simply contain the appropriate set of instance members. The `implements` clause of a class provides a mechanism to assert and validate that the class contains the appropriate sets of instance members, but otherwise it has no effect on the class type.
+Note that because TypeScript has a structural type system, a class doesn't need to explicitly state that it implements an interfaceâ€”it suffices for the class to simply contain the appropriate set of instance members. The `implements` clause of a class provides a mechanism to assert and validate that the class contains the appropriate sets of instance members, but otherwise it has no effect on the class type.
 
 ### <a name="8.1.2"/>8.1.2 Class Body
 
-The class body consists of zero or more constructor or member declarations. Statements are not allowed in the body of a class—they must be placed in the constructor or in members.
+The class body consists of zero or more constructor or member declarations. Statements are not allowed in the body of a classâ€”they must be placed in the constructor or in members.
 
 &emsp;&emsp;*ClassElement:*  *( Modified )*  
 &emsp;&emsp;&emsp;*ConstructorDeclaration*  
@@ -5305,7 +4460,7 @@ interface B {
 }
 ```
 
-Note that static declarations in a class do not contribute to the class type—rather, static declarations introduce properties on the constructor function object. Also note that the declaration of 'g' in 'B' overrides the member inherited from 'A'.
+Note that static declarations in a class do not contribute to the class typeâ€”rather, static declarations introduce properties on the constructor function object. Also note that the declaration of 'g' in 'B' overrides the member inherited from 'A'.
 
 ### <a name="8.2.5"/>8.2.5 Constructor Function Types
 
@@ -5918,8 +5073,8 @@ A ***constant enum expression*** is a subset of the expression grammar that can 
 * A numeric literal.
 * An identifier or property access that denotes a previously declared member in the same constant enum declaration.
 * A parenthesized constant enum expression.
-* A +, –, or ~ unary operator applied to a constant enum expression.
-* A +, –, *, /, %, &lt;&lt;, >>, >>>, &, ^, or | operator applied to two constant enum expressions.
+* A +, â€“, or ~ unary operator applied to a constant enum expression.
+* A +, â€“, *, /, %, &lt;&lt;, >>, >>>, &, ^, or | operator applied to two constant enum expressions.
 
 In the example
 
@@ -6139,7 +5294,7 @@ Import alias declarations are used to create local aliases for entities in other
 
 An *EntityName* consisting of a single identifier is resolved as a *NamespaceName* and is thus required to reference a namespace. The resulting local alias references the given namespace and is itself classified as a namespace.
 
-An *EntityName* consisting of more than one identifier is resolved as a *NamespaceName* followed by an identifier that names an exported entity in the given namespace. The resulting local alias has all the meanings of the referenced entity. (As many as three distinct meanings are possible for an entity name—value, type, and namespace.) In effect, it is as if the imported entity was declared locally with the local alias name.
+An *EntityName* consisting of more than one identifier is resolved as a *NamespaceName* followed by an identifier that names an exported entity in the given namespace. The resulting local alias has all the meanings of the referenced entity. (As many as three distinct meanings are possible for an entity nameâ€”value, type, and namespace.) In effect, it is as if the imported entity was declared locally with the local alias name.
 
 In the example
 
@@ -6207,7 +5362,7 @@ interface A { x: string; }
 namespace M {  
     export interface B { x: A; }  
     export interface C { x: B; }  
-    export function foo(c: C) { … }  
+    export function foo(c: C) { â€¦ }  
 }
 ```
 
@@ -6361,7 +5516,7 @@ When a TypeScript program is compiled, all of the program's source files are pro
 
 The TypeScript compiler automatically determines a source file's dependencies and includes those dependencies in the program being compiled. The determination is made from "reference comments" and module import declarations as follows:
 
-* A comment of the form /// &lt;reference path="…"/> that occurs before the first token in a source file adds a dependency on the source file specified in the path argument. The path is resolved relative to the directory of the containing source file.
+* A comment of the form /// &lt;reference path="â€¦"/> that occurs before the first token in a source file adds a dependency on the source file specified in the path argument. The path is resolved relative to the directory of the containing source file.
 * A module import declaration that specifies a relative module name (section [11.3.1](#11.3.1)) resolves the name relative to the directory of the containing source file. If a source file with the resulting path and file extension '.ts' exists, that file is added as a dependency. Otherwise, if a source file with the resulting path and file extension '.d.ts' exists, that file is added as a dependency.
 * A module import declaration that specifies a top-level module name (section [11.3.1](#11.3.1)) resolves the name in a host dependent manner (typically by resolving the name relative to a module name space root or searching for the name in a series of directories). If a source file with extension '.ts' or '.d.ts' corresponding to the reference is located, that file is added as a dependency.
 
@@ -7213,13 +6368,13 @@ This appendix contains a summary of the grammar found in the main document. As d
 &emsp;&emsp;&emsp;*TypeArguments<sub>opt</sub>*&emsp;`(`&emsp;*ArgumentList<sub>opt</sub>*&emsp;`)`
 
 &emsp;&emsp;*UnaryExpression:*  *( Modified )*  
-&emsp;&emsp;&emsp;…  
+&emsp;&emsp;&emsp;â€¦  
 &emsp;&emsp;&emsp;`<`&emsp;*Type*&emsp;`>`&emsp;*UnaryExpression*
 
 ## <a name="A.3"/>A.3 Statements
 
 &emsp;&emsp;*Declaration:*  *( Modified )*  
-&emsp;&emsp;&emsp;…  
+&emsp;&emsp;&emsp;â€¦  
 &emsp;&emsp;&emsp;*InterfaceDeclaration*  
 &emsp;&emsp;&emsp;*TypeAliasDeclaration*  
 &emsp;&emsp;&emsp;*EnumDeclaration*
