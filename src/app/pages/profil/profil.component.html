@@ -11,6 +11,13 @@
     <!-- <form class="profil-form" (submit)="proflValidation()"> -->
     <ul>
       <li>
+        <img [src]="this.profilePicture">
+      </li>
+      <li>
+        <label for="name">profilePicture</label>
+        <input name="name" formControlName="profilePicture" type="profilePicture" />
+      </li>
+      <li>
         <!-- <app-dialoggeneric></app-dialoggeneric> -->
         <label for="name">FirstName</label>
         <input name="name" formControlName="firstName" type="firstName" />

@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { emailValidator } from '../../core/validators/email.validator';
+import { urlValidator} from '../../core/validators/url.validator';
 import { Profile } from '../../core/models/profile.model';
 
 @Component({
@@ -23,11 +24,12 @@ export class ProfilComponent {
   private authService = inject(AuthService);
   public profilForm: FormGroup;
   public textContentButton: String;
-  public activeProfilValidation = false;
   public currentProfil: Profile;
+  public profilePicture:String;
 
   constructor(private fb: FormBuilder) {
     this.profilForm = this.fb.group({
+      profilePicture:new FormControl('', [Validators.required, urlValidator()]),
       firstName: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -56,8 +58,12 @@ export class ProfilComponent {
       .pipe(
         take(1),
         tap((reponse) => {
-          // console.log(reponse);
-          // console.log(reponse.firstName);
+            console.log(reponse);
+           
+          console.log(reponse.profilePicture);
+          this.profilePicture = reponse.profilePicture;
+          this.profilForm.get('profilePicture')?.setValue(reponse.profilePicture);
+          //console.log(this.profilForm.get('totot')?.value);
           this.profilForm.get('firstName')?.setValue(reponse.firstName);
           this.profilForm.get('lastName')?.setValue(reponse.lastName);
           this.profilForm.get('email')?.setValue(reponse.email);
@@ -76,53 +82,32 @@ export class ProfilComponent {
       firstName: this.profilForm.get('firstName')?.value,
       lastName: this.profilForm.get('lastName')?.value,
       email: this.profilForm.get('email')?.value,
-      profilePicture: 'Profile',
+      profilePicture: 'https://psp-logos.uptimerobot.com/logos/600026-1591785210.png',
       favoriteRestaurants: [],
     };
 
-    if (this.activeProfilValidation == true) {
+    if (this.profilForm.get('email')?.enabled == true) {
       this.authService
         .setProfile$(this.currentProfil)
         .pipe(
           take(1),
           tap((reponse) => {
-            console.log(reponse);
-            console.log(reponse.firstName);
+            // console.log(reponse);
           }),
-          finalize(() => {})
+          finalize(() => {
+            this.profil();
+          })
         )
         .subscribe();
     }
-    if (this.activeProfilValidation == false) this.proflUnlock();
+    if(this.profilForm.get('email')?.enabled == false)this.proflUnlock();
   }
 
   public proflUnlock(): void {
     this.profilForm.get('firstName')?.enable();
     this.profilForm.get('lastName')?.enable();
     this.profilForm.get('email')?.enable();
+    this.profilForm.get('profilePicture')?.enable();;
     this.textContentButton = 'Sauvegarder';
-    this.activeProfilValidation = true;
   }
 }
-
-//     .authentification$(this.loginForm.value)
-//     .pipe(
-//       take(1),
-//       tap((reponse) => this.serviceSuccess.setDataSuccess(reponse)),
-//       catchError((error) => {
-//         console.error(error.status);
-
-//         if(error.status == 401)
-//           this.alertService.setAlert('Incorrect email or password',AlertComponent.ERROR);
-//         else
-//           this.alertService.setAlert('An error has occurred :'+error.error.message,AlertComponent.ERROR);
-
-//         return EMPTY; //Couper le flux,
-//       }),
-//       finalize(() => {
-//         console.log('navigation vers /accueil');
-//         this.router.navigate(['/accueil']);
-//       })
-//     )
-//     .subscribe();
-// }
