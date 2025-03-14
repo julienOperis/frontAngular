@@ -67,6 +67,7 @@ export class ProfilComponent {
           this.profilForm.get('firstName')?.setValue(reponse.firstName);
           this.profilForm.get('lastName')?.setValue(reponse.lastName);
           this.profilForm.get('email')?.setValue(reponse.email);
+          this.profilForm.get('profilePicture')?.disable({ onlySelf: true });
           this.profilForm.get('firstName')?.disable({ onlySelf: true });
           this.profilForm.get('lastName')?.disable({ onlySelf: true });
           this.profilForm.get('email')?.disable({ onlySelf: true });
@@ -104,6 +105,7 @@ export class ProfilComponent {
   }
 
   public proflUnlock(): void {
+    this.profilForm.get('profilePicture')?.enable();
     this.profilForm.get('firstName')?.enable();
     this.profilForm.get('lastName')?.enable();
     this.profilForm.get('email')?.enable();
