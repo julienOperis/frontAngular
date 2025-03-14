@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: 'profil', component: ProfilComponent , canActivate: [AuthGuard] }, // Utilisation du guard}
   { path: 'inscription', component: InscriptionComponent },
   { path: 'connexion', component: ConnexionComponent },
-  { path: '', component: ConnexionComponent },
+  { path: '', component: AcceuileComponent },
   { path: '**', component: PageNotFoundComponent },
   //{ path: 'Tableau de bord', component: TableauDeBordComponent, canActivate: [AuthGuard], // Utilisation du guard}
 ];
