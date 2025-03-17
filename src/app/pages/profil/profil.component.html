@@ -12,7 +12,11 @@
     <ul>
       <li>
         <img [src]="this.profilePicture">
+        <img [src]="this.imageSrc" alt="image">
       </li>
+      <li>
+        <input id="file-input" #Image type="file" (change)="handleFileInput(event.target.files)" />
+    </li>
       <li>
         <label for="name">profilePicture</label>
         <input name="name" formControlName="profilePicture" type="profilePicture" />

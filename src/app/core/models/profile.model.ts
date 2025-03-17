@@ -4,6 +4,6 @@ export interface Profile {
     firstName: string;
     lastName: string;
     email: string;
-    profilePicture: string; // URL ou chemin de la photo de profil
+    profilePicture: Blob | null; // Binary Large Object
     favoriteRestaurants: Restaurant[]; // Liste de restaurants préférés
 }

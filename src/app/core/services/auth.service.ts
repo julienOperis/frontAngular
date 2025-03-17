@@ -58,7 +58,7 @@ export class AuthService {
       firstName: 'operis',
       lastName: 'operis',
       email: 'julien.boulay@operis.fr',
-      profilePicture: '',
+      profilePicture: null,
       favoriteRestaurants: [],
     };
     console.log('this.httpClient.patch<Profile>');    

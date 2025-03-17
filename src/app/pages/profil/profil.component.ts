@@ -21,11 +21,14 @@ import { Profile } from '../../core/models/profile.model';
   styleUrl: './profil.component.scss',
 })
 export class ProfilComponent {
+  private fileToUpload: Blob
   private authService = inject(AuthService);
   public profilForm: FormGroup;
   public textContentButton: String;
   public currentProfil: Profile;
-  public profilePicture:String;
+  public profilePicture: Blob | null;
+  event: any;
+  imageSrc: String;//global variable  
 
   constructor(private fb: FormBuilder) {
     this.profilForm = this.fb.group({
@@ -83,7 +86,8 @@ export class ProfilComponent {
       firstName: this.profilForm.get('firstName')?.value,
       lastName: this.profilForm.get('lastName')?.value,
       email: this.profilForm.get('email')?.value,
-      profilePicture: 'https://psp-logos.uptimerobot.com/logos/600026-1591785210.png',
+      // profilePicture: 'https://psp-logos.uptimerobot.com/logos/600026-1591785210.png',
+      profilePicture: this.fileToUpload,
       favoriteRestaurants: [],
     };
 
@@ -112,4 +116,23 @@ export class ProfilComponent {
     this.profilForm.get('profilePicture')?.enable();;
     this.textContentButton = 'Sauvegarder';
   }
+
+  handleFileInput(files: Blob) {
+    this.fileToUpload = files;
+    this.setURLimgProfil();    
+}
+
+
+
+setURLimgProfil(){
+
+
+const imageUrl = URL.createObjectURL(this.fileToUpload);  
+console.log(imageUrl);//blob:http://localhost:8100/c489.etc  
+this.imageSrc = imageUrl;  
+
+
+}
+
+
 }
