@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
 import { Login } from '../models/user.interface';
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
-import { Profile } from '../models/profile.model';
+import { Profile, ProfileRequest } from '../../pages/profil/models/profile.model';
+import { environment } from '../../../environnements/environnement';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
   private isAuthenticated = false;
-  private _apiUrl: string = 'http://localhost:3000/auth'
+  private _apiUrl: string = `${environment}/auth`
 
 
   public userConnecte$: Subject<string> = new Subject();
@@ -29,44 +30,8 @@ export class AuthService {
 
   
   public authentification$(login: Login):Observable<Login>{
-    console.log('authentification Login');
-    console.log(login);    
-    return this.httpClient.post<Login>("http://localhost:3000/auth/login",login)
+    return this.httpClient.post<Login>(`${this._apiUrl}/login`,login)
   }
-
-  public getProfile$():Observable<Profile>{
-    console.log('get profile Login');    
-    const headers = new HttpHeaders({
-      'Authorization': ['Authorization', this.getToken() ?? '' ],
-      'Custom-Header': 'value'
-    });
-
-    return this.httpClient.get<Profile>("http://localhost:3000/users/profile",{headers})
-  }
-
-
-  
-  public setProfile$(profilMaj:Profile):Observable<Profile>{
-    console.log('get profile Login');    
-    const headers = new HttpHeaders({
-      'Authorization': ['Authorization', this.getToken() ?? '' ],
-      'Custom-Header': 'value'
-    });
-
-    const context = new HttpContext();
-    const userProfile: Profile = {      
-      firstName: 'operis',
-      lastName: 'operis',
-      email: 'julien.boulay@operis.fr',
-      profilePicture: null,
-      favoriteRestaurants: [],
-    };
-    console.log('this.httpClient.patch<Profile>');    
-    console.log('profilMaj');    
-    console.log(profilMaj);    
-    return this.httpClient.patch<Profile>("http://localhost:3000/users/update",profilMaj,{headers,context})
-  }
-
 
   public getToken():string | null {
     return localStorage.getItem('token');

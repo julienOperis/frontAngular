@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { catchError, finalize, take, tap } from 'rxjs';
+// import { ImageUploadComponent } from '../../components/image-upload/image-upload.component';
 import {
   FormBuilder,
   FormControl,
@@ -10,32 +11,45 @@ import {
   Validators,
 } from '@angular/forms';
 import { emailValidator } from '../../core/validators/email.validator';
-import { urlValidator} from '../../core/validators/url.validator';
-import { Profile } from '../../core/models/profile.model';
+import { urlValidator } from '../../core/validators/url.validator';
+import { Profile, ProfileRequest } from './models/profile.model';
+import { ImageUploadComponent } from '../../components/image-upload/image-upload.component';
+import { imageSizeValidator } from '../../core/validators/image.validator';
+import { ProfileService } from './services/profile.service';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, ImageUploadComponent],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss',
 })
 export class ProfilComponent {
-  private fileToUpload: Blob
-  private authService = inject(AuthService);
+  private fileToUpload: File;
+  private imagePreview: string | null = null;
+  private _profileService = inject(ProfileService);
+
   public profilForm: FormGroup;
-  public textContentButton: String;
-  public currentProfil: Profile;
-  public profilePicture: Blob | null;
+  public textContentButton: string = 'Profile';
+  public profilePictureFile = signal<File | null>(null);
+
+  public profilePicture: String;
   event: any;
-  imageSrc: String;//global variable  
+  imageSrc: String; //global variable
 
   constructor(private fb: FormBuilder) {
     this.profilForm = this.fb.group({
-      profilePicture:new FormControl('', [Validators.required, urlValidator()]),
+      profilePicture: new FormControl('', [
+        Validators.required,
+        urlValidator(),
+      ]),
       firstName: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
+      ]),
+      profileFileUppload: new FormControl('', [
+        Validators.required,
+        imageSizeValidator(),
       ]),
       lastName: new FormControl('', [
         Validators.required,
@@ -52,60 +66,59 @@ export class ProfilComponent {
   // public profilFormControl = inject(FormControl);
 
   ngOnInit(): void {
-    this.profil();
+    this.getProfile();
   }
 
-  public profil(): void {
-    this.authService
+  public getProfile(): void {
+    this._profileService
       .getProfile$()
       .pipe(
         take(1),
         tap((reponse) => {
-            console.log(reponse);
-           
+          console.log(reponse);
+
           console.log(reponse.profilePicture);
-          this.profilePicture = reponse.profilePicture;
-          this.profilForm.get('profilePicture')?.setValue(reponse.profilePicture);
+          //this.profilePicture = '';
+          this.profilForm
+            .get('profilePicture')
+            ?.setValue(reponse.profilePicture);
           //console.log(this.profilForm.get('totot')?.value);
-          this.profilForm.get('firstName')?.setValue(reponse.firstName);
-          this.profilForm.get('lastName')?.setValue(reponse.lastName);
-          this.profilForm.get('email')?.setValue(reponse.email);
-          this.profilForm.get('profilePicture')?.disable({ onlySelf: true });
-          this.profilForm.get('firstName')?.disable({ onlySelf: true });
-          this.profilForm.get('lastName')?.disable({ onlySelf: true });
-          this.profilForm.get('email')?.disable({ onlySelf: true });
-          this.textContentButton = 'Débloqué';
-        }),
-        finalize(() => {})
+          this._patchProfileForm(reponse);
+        })
       )
       .subscribe();
   }
 
-  public proflValidation(): void {
-    this.currentProfil = {
+  public profileValidation(): void {
+    const currentProfile: Profile = {
       firstName: this.profilForm.get('firstName')?.value,
       lastName: this.profilForm.get('lastName')?.value,
       email: this.profilForm.get('email')?.value,
       // profilePicture: 'https://psp-logos.uptimerobot.com/logos/600026-1591785210.png',
-      profilePicture: this.fileToUpload,
+      profilePicture: '',
       favoriteRestaurants: [],
     };
 
+    const currentProfilRequest: ProfileRequest = {
+      profilMaj: currentProfile,
+      fileUploadImage: this.profilePictureFile(),
+    };
+
     if (this.profilForm.get('email')?.enabled == true) {
-      this.authService
-        .setProfile$(this.currentProfil)
+      console.log('proflValidation');
+
+      this._profileService
+        .updateProfile$(currentProfilRequest)
         .pipe(
           take(1),
           tap((reponse) => {
             // console.log(reponse);
           }),
-          finalize(() => {
-            this.profil();
-          })
+          finalize(() => {})
         )
         .subscribe();
     }
-    if(this.profilForm.get('email')?.enabled == false)this.proflUnlock();
+    if (this.profilForm.get('email')?.enabled == false) this.proflUnlock();
   }
 
   public proflUnlock(): void {
@@ -113,26 +126,42 @@ export class ProfilComponent {
     this.profilForm.get('firstName')?.enable();
     this.profilForm.get('lastName')?.enable();
     this.profilForm.get('email')?.enable();
-    this.profilForm.get('profilePicture')?.enable();;
+    this.profilForm.get('profilePicture')?.enable();
     this.textContentButton = 'Sauvegarder';
   }
 
-  handleFileInput(files: Blob) {
-    this.fileToUpload = files;
-    this.setURLimgProfil();    
-}
+  handleFileInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.fileToUpload = input.files[0];
 
+      // Preview the selected image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
 
+      if (this.fileToUpload) {
+      }
+    }
 
-setURLimgProfil(){
+    this.setURLimgProfil();
+  }
 
+  private _patchProfileForm(reponse: Profile): void {
+    this.profilForm.patchValue({
+      ...this.profilForm,
+      firstName: reponse.firstName,
+      lastName: reponse.lastName,
+      email: reponse.email,
+      profilePicture: reponse.profilePicture,
+    });
+    this.profilForm.get('profilePicture')?.disable({ onlySelf: true });
+    this.profilForm.get('firstName')?.disable({ onlySelf: true });
+    this.profilForm.get('lastName')?.disable({ onlySelf: true });
+    this.profilForm.get('email')?.disable({ onlySelf: true });
+    this.textContentButton = 'Debloquer';
+  }
 
-const imageUrl = URL.createObjectURL(this.fileToUpload);  
-console.log(imageUrl);//blob:http://localhost:8100/c489.etc  
-this.imageSrc = imageUrl;  
-
-
-}
-
-
+  setURLimgProfil() {}
 }

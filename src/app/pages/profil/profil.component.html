@@ -1,3 +1,4 @@
+
 <div class="profil-container">
   <div>
     <h1>Profil</h1>
@@ -6,16 +7,16 @@
   <form
     [formGroup]="profilForm"
     class="profil-form"
-    (submit)="proflValidation()"
+    (submit)="profileValidation()"
   >
     <!-- <form class="profil-form" (submit)="proflValidation()"> -->
     <ul>
       <li>
-        <img [src]="this.profilePicture">
         <img [src]="this.imageSrc" alt="image">
       </li>
       <li>
-        <input id="file-input" #Image type="file" (change)="handleFileInput(event.target.files)" />
+        <!-- <input id="file-input" #Image type="file" (change)="handleFileInput($event)" /> -->
+        <app-image-upload (file)="profilePictureFile.set($event)"></app-image-upload>
     </li>
       <li>
         <label for="name">profilePicture</label>
@@ -34,7 +35,7 @@
         <label for="Email">Email</label>
         <input formControlName="email" type="email" />
       </li>
-      <button name="buttonProilForm" >{{textContentButton}}</button>
+      <button type="submit" >{{textContentButton}}</button>
     </ul>
   </form>
 </div>

@@ -836,8 +836,11 @@ Ce guide couvre les opérateurs les plus couramment utilisés en TypeScript. Pour 
 
 
 
+# Cloudinary 
 
+**Image and Video APIs for Fast Fast, Scalable Media Management**
 
+ [https://cloudinary.com/](Cloudinary)
 
 
 # TypeScript Langage Specification
